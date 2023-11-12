@@ -31,17 +31,27 @@
                                     </attributedString>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="getUsersButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="d9F-yJ-InI"/>
+                                    <action selector="getUsersButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="pHU-y2-eR2"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-2s-rq1">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.85490196939999996" green="0.34117650989999998" blue="0.2235293984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Ak5-2s-rq1" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="4l1-9l-rsn"/>
                             <constraint firstItem="ad0-rW-mTQ" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="4xK-uR-7Wq"/>
+                            <constraint firstItem="Ak5-2s-rq1" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="DK8-B7-lL7"/>
                             <constraint firstItem="ad0-rW-mTQ" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="oSU-8r-Dab"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="fetchButton" destination="ad0-rW-mTQ" id="0GG-BA-IW2"/>
+                        <outlet property="loader" destination="Ak5-2s-rq1" id="VvV-Va-MCP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

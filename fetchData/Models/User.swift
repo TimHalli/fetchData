@@ -29,6 +29,10 @@ struct User: Decodable {
         case creditCard = "credit_card"
         case employment, address, subscription
     }
+    
+    var fullName: String {
+        "\(name ?? "") \(surname ?? "")"
+    }
 }
 
 struct Employment: Decodable {
