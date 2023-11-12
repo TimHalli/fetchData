@@ -50,10 +50,7 @@ final class MainViewController: UIViewController {
             self?.fetchButton.isHidden = false
         }
         alert.addAction(okAction)
-
-        DispatchQueue.main.async { [weak self] in
-            self?.present(alert, animated: true)
-        }
+        present(alert, animated: true)
     }
 
     // MARK: - IBActions
@@ -70,14 +67,9 @@ extension MainViewController {
     private func fetchData() {
         URLSession.shared.dataTask(with: URL(string: "\(BASE_URL)/users?size=10&is_xml=true")!) { data, response, error in
             
-            if let error {
-                print(error.localizedDescription)
-                self.showAlert(withStatus: .failed)
-                return
-            }
-            
             guard let data else {
                 self.showAlert(withStatus: .failed)
+                print(error?.localizedDescription ?? "No error description")
                 return
             }
             
@@ -87,7 +79,10 @@ extension MainViewController {
                 
                 DispatchQueue.main.async {
                     users.enumerated().forEach { (index, user) in
-                        print("User \(index + 1)| \(user.fullName): \(user)")
+                        print("""
+                              User \(index + 1)| \(user.fullName): 
+                              \(user)
+                              """)
                     }
                     
                     self.showAlert(withStatus: .success)
