@@ -65,7 +65,7 @@ final class MainViewController: UIViewController {
 extension MainViewController {
     
     private func fetchData() {
-        URLSession.shared.dataTask(with: URL(string: "\(BASE_URL)/users?size=10&is_xml=true")!) { data, response, error in
+        URLSession.shared.dataTask(with: URL(string: "\(BASE_URL)/users?size=10&is_xml=true")!) { data, _, error in
             
             guard let data else {
                 self.showAlert(withStatus: .failed)
