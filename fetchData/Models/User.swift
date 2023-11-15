@@ -18,7 +18,7 @@ struct User: Decodable {
     let creditCard: CreditCard?
     let subscription: Subscription?
     
-    private enum CodingKeys: String, CodingKey {
+     enum CodingKeys: String, CodingKey {
         case id, uid, password
         case name = "first_name"
         case surname = "last_name"
