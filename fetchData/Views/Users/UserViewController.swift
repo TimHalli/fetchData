@@ -6,11 +6,12 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class UserViewController: UIViewController {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var fullNameUser: UILabel!
+    
+    private let networkManager = NetworkManager.shared
     
     var user: User!
     
@@ -21,7 +22,14 @@ final class UserViewController: UIViewController {
     
     private func composeUser(_ user: User) {
         fullNameUser.text = user.fullName
-        let resource = Kingfisher.KF.ImageResource(downloadURL: URL(string: user.avatar ?? "")!)
-        userImage.kf.setImage(with: resource)
+        
+        networkManager.fetchData(from: user.avatar ?? "") { result in
+            switch result {
+            case .success(let imageData):
+                self.userImage.image = UIImage(data: imageData)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

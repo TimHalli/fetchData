@@ -6,35 +6,15 @@
 //
 
 import Foundation
+import Alamofire
 
 enum Link {
     case usersAPI
-    case imageURL
-    case courseURL
-    case coursesURL
-    case aboutUsURL
-    case aboutUsURL2
-    case postRequest
-    case courseImageURL
-    
+   
     var url: URL {
         switch self {
         case .usersAPI:
             return URL(string: "https://random-data-api.com/api/v2/users?size=100&is_xml=true")!
-        case .imageURL:
-            return URL(string: "https://applelives.com/wp-content/uploads/2016/03/iPhone-SE-11.jpeg")!
-        case .courseURL:
-            return URL(string: "https://swiftbook.ru//wp-content/uploads/api/api_course")!
-        case .coursesURL:
-            return URL(string: "https://swiftbook.ru//wp-content/uploads/api/api_courses")!
-        case .aboutUsURL:
-            return URL(string: "https://swiftbook.ru//wp-content/uploads/api/api_website_description")!
-        case .aboutUsURL2:
-            return URL(string: "https://swiftbook.ru//wp-content/uploads/api/api_missing_or_wrong_fields")!
-        case .postRequest:
-            return URL(string: "https://jsonplaceholder.typicode.com/posts")!
-        case .courseImageURL:
-            return URL(string: "https://swiftbook.ru/wp-content/uploads/sites/2/2018/08/notifications-course-with-background.png")!
         }
     }
 }
@@ -42,7 +22,18 @@ enum Link {
 enum NetworkError: Error {
     case invalidURL
     case noData
-    case decodingError
+    case noUsers
+    
+    var title: String {
+        switch self {
+        case .invalidURL:
+            return "Can't decode recived data"
+        case .noData:
+            return "Can'tfetch data at all"
+        case .noUsers:
+            return "No users got from API"
+        }
+    }
 }
 
 final class NetworkManager {
@@ -50,24 +41,83 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchAPI<T: Decodable>(_ type: T.Type, from url: URL, comletion: @escaping(Result<T, NetworkError>) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data else {
-                comletion(.failure(.noData))
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let type = try decoder.decode(T.self, from: data)
-                DispatchQueue.main.async {
-                    comletion(.success(type))
+    func fetchUsers(from url: URL, complition: @escaping(Result<[User], AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { response in
+                
+                switch response.result {
+                case .success(let value):
+                    let localUsers = User.getUsers(from: value)
+                    complition(.success(localUsers))
+                case .failure(let error):
+                    complition(.failure(error))
                 }
-            } catch {
-                comletion(.failure(.decodingError))
             }
-            
-        }.resume()
     }
+    
+    func fetchData(from url: String, completion: @escaping(Result<Data, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseData { dataResponse in
+                
+                switch dataResponse.result {
+                case .success(let imageData):
+                    completion(.success(imageData))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+//    func fetchAPI<T: Decodable>(_ type: T.Type, from url: URL, comletion: @escaping(Result<T, NetworkError>) -> Void) {
+//        URLSession.shared.dataTask(with: url) { data, _, error in
+//            guard let data else {
+//                comletion(.failure(.noData))
+//                return
+//            }
+//            
+//            do {
+//                let decoder = JSONDecoder()
+//                let type = try decoder.decode(T.self, from: data)
+//                DispatchQueue.main.async {
+//                    comletion(.success(type))
+//                }
+//            } catch {
+//                comletion(.failure(.noUsers))
+//            }
+//        }.resume()
+//    }
+//    
+//    func fetchImage(from url: URL, completion: @escaping(Result<Data, NetworkError>) -> Void) {
+//        DispatchQueue.global().async {
+//            guard let imageData = try? Data(contentsOf: url) else {
+//                completion(.failure(.noData))
+//                return
+//            }
+//            DispatchQueue.main.async {
+//                completion(.success(imageData))
+//            }
+//        }
+//    }
+    
+//    func fetchURL(url: URL, completion: @escaping(URL) -> Void) {
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data else {
+//                print(error ?? "Non")
+//                return
+//            }
+//            
+//            let jsonDecoder = JSONDecoder()
+//            
+//            do {
+//                let imageData = try jsonDecoder.decode(User.self, from: data)
+//                DispatchQueue.main.async {
+//                    completion(URL(string: imageData.avatar ?? "")!)
+//                }
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
 }

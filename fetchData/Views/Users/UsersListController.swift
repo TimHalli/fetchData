@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 final class UsersListController: UITableViewController {
     private let networkManager = NetworkManager.shared
@@ -29,7 +30,6 @@ final class UsersListController: UITableViewController {
 
         let user = localUsers[indexPath.row]
         cell.configure(with: user)
-//        cell.userImage
         return cell
     }
     
@@ -52,14 +52,14 @@ extension UsersListController {
 extension UsersListController {
    
     func fetchData() {
-        networkManager.fetchAPI ([User].self, from: Link.usersAPI.url) { [unowned self] result in
+        networkManager.fetchUsers(from: Link.usersAPI.url) { result in
             switch result {
-            case .success(let dataUsers):
-                localUsers = dataUsers
+            case .success(let users):
+                self.localUsers = users
+                self.tableView.reloadData()
             case .failure(let error):
                 print(error)
-            }
-            tableView.reloadData()
+            }         
         }
     }
 }

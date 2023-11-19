@@ -17,7 +17,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="wWH-TM-7A6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uPh-W6-Ogx">
                             <size key="itemSize" width="278" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -123,7 +123,7 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.7352755323852298" green="1" blue="0.98675540980747323" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.73333333333333328" green="1" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="USd-nJ-KoF" firstAttribute="centerY" secondItem="V08-Jc-tPq" secondAttribute="centerY" id="08k-xF-ksb"/>
                                         <constraint firstItem="USd-nJ-KoF" firstAttribute="leading" secondItem="mHN-YH-XTc" secondAttribute="trailing" constant="8" symbolic="YES" id="RKu-Pm-xCA"/>
@@ -174,7 +174,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8PO-uX-kwd"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.73333333333333328" green="1" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="s1b-Zv-sd7" firstAttribute="top" secondItem="A0p-B8-uQl" secondAttribute="bottom" constant="38" id="3Y8-dq-92Z"/>
                             <constraint firstItem="s1b-Zv-sd7" firstAttribute="centerX" secondItem="ZyH-Ul-Fyw" secondAttribute="centerX" id="8YC-F5-fXM"/>
